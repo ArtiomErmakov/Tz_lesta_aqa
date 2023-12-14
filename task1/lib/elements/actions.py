@@ -144,3 +144,14 @@ class WaitTextAction(Action):
             return True
         else:
             raise NoSuchElementException
+
+
+class IsSelectedAction(Action):
+    """Check is element(checkbox) selected.
+    self._owner.web_element is the WebElement
+    returns bool
+    """
+
+    def __call__(self) -> bool:
+        self.debug_value = self._owner.web_element.is_selected()
+        return self.debug_value
