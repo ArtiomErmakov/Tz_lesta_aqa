@@ -91,3 +91,14 @@ class ReadTextAction(Action):
     def __call__(self) -> str:
         self.debug_value = self._owner.web_element.text
         return self.debug_value
+
+
+class ClickAction(Action):
+    """Clicks by web page element.
+    self._owner.web_element is the WebElement
+    returns None
+    """
+
+    def __call__(self) -> None:
+        self._owner.web_element.click()
+
