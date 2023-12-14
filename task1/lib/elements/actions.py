@@ -215,3 +215,19 @@ class ReadPropertyListAction(Action):
 
     def __call__(self) -> List[str]:
         return self._continuable_read_list_action("get_property", self._prop_name)
+
+
+class ReadAttributeListAction(Action):
+    """This class works in a pair with Elements class. Reads attribute 'attr_name'
+    from every element in self._owner.web_element list.
+    self._owner.web_element is the List[WebElement] - result of class Elements
+    returns the list of text strings
+    """
+    __slots__ = "_attr_name"
+
+    def __init__(self, owner: TypeElement, attr_name: str) -> None:
+        super().__init__(owner)
+        self._attr_name = attr_name
+
+    def __call__(self) -> List[str]:
+        return self._continuable_read_list_action("get_attribute", self._attr_name)
