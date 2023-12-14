@@ -14,3 +14,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from ..constants import Const
 from .actions import TypeElement
+
+
+IGNORED_EXCEPTIONS = (NoSuchElementException,
+                      ElementClickInterceptedException,
+                      ElementNotInteractableException,
+                      StaleElementReferenceException)
+
+
