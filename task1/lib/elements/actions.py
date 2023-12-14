@@ -263,3 +263,24 @@ class IsSelectedByIndexElementsAction(Action):
         elements = self._owner.web_element if isinstance(self._owner.web_element, list) else [self._owner.web_element]
         self.debug_value = elements[self._index].is_selected()
         return self.debug_value
+
+
+class WaitTextChangedAction(Action):
+    """Waits until the text value from the element changes.
+    self._owner.web_element is the WebElement
+    value - is text value that will be change
+    returns bool(WebElement.text != value)
+    """
+    __slots__ = "_value"
+
+    def __init__(self, owner: TypeElement, value: str) -> None:
+        super().__init__(owner)
+        self._value = value
+
+    def __call__(self) -> Union[bool, NoReturn]:
+        self.debug_value = self._owner.web_element.text
+        logging.debug(f"element.text: '{self.debug_value}'")
+        if self.debug_value != self._value:
+            return True
+        else:
+            raise NoSuchElementException
