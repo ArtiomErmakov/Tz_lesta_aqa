@@ -124,3 +124,23 @@ class GetLenAction(Action):
         elements = self._owner.web_element if isinstance(self._owner.web_element, list) else [self._owner.web_element]
         self.debug_value = len(elements)
         return self.debug_value
+
+
+class WaitTextAction(Action):
+    """Wait expected text (self._value) appears on element.
+       If expected text is None - wait not empty text.
+    """
+    __slots__ = "_value"
+
+    def __init__(self, owner: TypeElement, value: Optional[str]) -> None:
+        super().__init__(owner)
+        self._value = value
+
+    def __call__(self) -> bool:
+        self.debug_value = self._owner.web_element.text
+        logging.debug(f"element.text: '{self.debug_value}'")
+        if ((self._value is None and self.debug_value)
+                or (self._value is not None and self.debug_value == self._value)):
+            return True
+        else:
+            raise NoSuchElementException
