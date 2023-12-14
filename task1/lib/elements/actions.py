@@ -247,3 +247,19 @@ class ClickByIndexElementsAction(Action):
     def __call__(self) -> None:
         elements = self._owner.web_element if isinstance(self._owner.web_element, list) else [self._owner.web_element]
         elements[self._index].click()
+
+
+class IsSelectedByIndexElementsAction(Action):
+    """This class works in a pair with Elements class. Check the element by index from List[WebElement] is selected.
+    returns bool element is selected
+    """
+    __slots__ = "_index"
+
+    def __init__(self, owner: TypeElement, index: int) -> None:
+        super().__init__(owner)
+        self._index = index
+
+    def __call__(self) -> bool:
+        elements = self._owner.web_element if isinstance(self._owner.web_element, list) else [self._owner.web_element]
+        self.debug_value = elements[self._index].is_selected()
+        return self.debug_value
