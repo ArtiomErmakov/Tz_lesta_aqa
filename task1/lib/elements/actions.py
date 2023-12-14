@@ -112,3 +112,15 @@ class IsOnPageAction(Action):
     def __call__(self) -> bool:
         self.debug_value = self._owner.web_element
         return self.debug_value is not None
+
+
+class GetLenAction(Action):
+    """Get self._element length.
+    self._owner.web_element is the WebElement
+    returns int
+    """
+
+    def __call__(self) -> int:
+        elements = self._owner.web_element if isinstance(self._owner.web_element, list) else [self._owner.web_element]
+        self.debug_value = len(elements)
+        return self.debug_value
