@@ -66,3 +66,17 @@ class ClearAction(Action):
     def __call__(self) -> None:
         self._owner.web_element.clear()
 
+
+class SendKeysAction(Action):
+    """Sends string value to element.
+    element is the WebElement
+    value is string to send
+    returns None
+    """
+
+    def __init__(self, owner: TypeElement, value: str) -> None:
+        super().__init__(owner)
+        self._value = value
+
+    def __call__(self) -> None:
+        self._owner.web_element.send_keys(self._value)
