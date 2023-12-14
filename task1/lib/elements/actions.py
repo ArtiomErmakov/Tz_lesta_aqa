@@ -102,3 +102,13 @@ class ClickAction(Action):
     def __call__(self) -> None:
         self._owner.web_element.click()
 
+
+class IsOnPageAction(Action):
+    """Check is element on page.
+    self._owner.web_element is the WebElement
+    returns bool
+    """
+
+    def __call__(self) -> bool:
+        self.debug_value = self._owner.web_element
+        return self.debug_value is not None
