@@ -55,3 +55,14 @@ class Action(ABC):
                 self._owner.incomplete_result = self.debug_value
                 raise IncompleteListActionError(f"{index=} {self.debug_value=} {err}")
         return self.debug_value
+
+
+class ClearAction(Action):
+    """Clear content of web page element.
+    self._owner.web_element is the WebElement
+    returns None
+    """
+
+    def __call__(self) -> None:
+        self._owner.web_element.clear()
+
