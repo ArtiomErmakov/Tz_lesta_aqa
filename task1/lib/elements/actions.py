@@ -307,3 +307,12 @@ class IsEnabledAction(Action):
         self.debug_value = self._owner.web_element.is_enabled()
         return self.debug_value
 
+
+class SubmitAction(Action):
+    """Submit value to form by sending js event ()by web page element.
+    self._owner.web_element is the WebElement
+    returns None
+    """
+
+    def __call__(self) -> None:
+        self._owner._web_driver.execute_script("arguments[0].blur();", self._owner.web_element)
