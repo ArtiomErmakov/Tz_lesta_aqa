@@ -9,3 +9,7 @@ class Const:
     ELEMENT_WAIT_TIMEOUT: int = 60
     POLL_FREQUENCY: float = 0.5  # faster frequency consume additional memory!
     PROPERTY_VALUE: str = "value"
+
+
+class Url:
+    SRV_URL = f"https://en.wikipedia.org/wiki/Programming_languages_used_in_most_popular_websites"
