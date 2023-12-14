@@ -80,3 +80,14 @@ class SendKeysAction(Action):
 
     def __call__(self) -> None:
         self._owner.web_element.send_keys(self._value)
+
+
+class ReadTextAction(Action):
+    """Reads element's text.
+    self._owner.web_element is the WebElement
+    returns the WebElement. text result
+    """
+
+    def __call__(self) -> str:
+        self.debug_value = self._owner.web_element.text
+        return self.debug_value
