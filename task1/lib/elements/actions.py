@@ -295,3 +295,15 @@ class GetSizeAction(Action):
     def __call__(self) -> Dict[str, int]:
         self.debug_value = self._owner.web_element.size
         return self.debug_value
+
+
+class IsEnabledAction(Action):
+    """Check is element enabled.
+    self._owner.web_element is the WebElement
+    returns bool
+    """
+
+    def __call__(self) -> bool:
+        self.debug_value = self._owner.web_element.is_enabled()
+        return self.debug_value
+
