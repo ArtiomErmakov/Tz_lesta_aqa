@@ -166,3 +166,19 @@ class ReadTextListAction(Action):
 
     def __call__(self) -> List[str]:
         return self._continuable_read_list_action("text")
+
+
+class GetAttributeAction(Action):
+    """Reads attribute value from element.
+    self._owner.web_element is the WebElement
+    attr_name is name of WebElement's attribute
+    returns value of attribute or None if attribute not present
+    """
+
+    def __init__(self, owner: TypeElement, attr_name: str) -> None:
+        super().__init__(owner)
+        self._attr_name = attr_name
+
+    def __call__(self) -> Optional[str]:
+        self.debug_value = self._owner.web_element.get_attribute(self._attr_name)
+        return self.debug_value
