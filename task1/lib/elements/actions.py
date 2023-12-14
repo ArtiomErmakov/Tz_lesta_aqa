@@ -182,3 +182,20 @@ class GetAttributeAction(Action):
     def __call__(self) -> Optional[str]:
         self.debug_value = self._owner.web_element.get_attribute(self._attr_name)
         return self.debug_value
+
+
+class GetPropertyAction(Action):
+    """Reads DOM Property value from element.
+    self._owner.web_element is the WebElement
+    attr_name is name of WebElement's attribute
+    returns value of attribute or None if attribute not present
+    """
+    __slots__ = "_prop_name"
+
+    def __init__(self, owner: TypeElement, prop_name: str) -> None:
+        super().__init__(owner)
+        self._prop_name = prop_name
+
+    def __call__(self) -> Optional[str]:
+        self.debug_value = self._owner.web_element.get_property(self._prop_name)
+        return self.debug_value
