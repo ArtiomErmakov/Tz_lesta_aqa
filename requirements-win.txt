@@ -1,0 +1,4 @@
+pep8
+pytest
+selenium==4.3.0
+webdriver-manager
