@@ -284,3 +284,14 @@ class WaitTextChangedAction(Action):
             return True
         else:
             raise NoSuchElementException
+
+
+class GetSizeAction(Action):
+    """Get self._element size x and y.
+    self._owner.web_element is the WebElement
+    returns dict
+    """
+
+    def __call__(self) -> Dict[str, int]:
+        self.debug_value = self._owner.web_element.size
+        return self.debug_value
