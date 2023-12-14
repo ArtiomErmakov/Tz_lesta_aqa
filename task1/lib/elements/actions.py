@@ -155,3 +155,14 @@ class IsSelectedAction(Action):
     def __call__(self) -> bool:
         self.debug_value = self._owner.web_element.is_selected()
         return self.debug_value
+
+
+class ReadTextListAction(Action):
+    """This class works in a pair with Elements class. Reads text from every
+    element in self._owner.web_element list.
+    self._owner.web_element is the List[WebElement] - result of class Elements
+    returns the list of text strings
+    """
+
+    def __call__(self) -> List[str]:
+        return self._continuable_read_list_action("text")
