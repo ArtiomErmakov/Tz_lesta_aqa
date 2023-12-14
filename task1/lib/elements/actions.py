@@ -199,3 +199,19 @@ class GetPropertyAction(Action):
     def __call__(self) -> Optional[str]:
         self.debug_value = self._owner.web_element.get_property(self._prop_name)
         return self.debug_value
+
+
+class ReadPropertyListAction(Action):
+    """This class works in a pair with Elements class. Reads property 'prop_name'
+    from every element in self._owner.web_element list.
+    self._owner.web_element is the List[WebElement] - result of class Elements
+    returns the list of text strings
+    """
+    __slots__ = "_prop_name"
+
+    def __init__(self, owner: TypeElement, prop_name: str) -> None:
+        super().__init__(owner)
+        self._prop_name = prop_name
+
+    def __call__(self) -> List[str]:
+        return self._continuable_read_list_action("get_property", self._prop_name)
