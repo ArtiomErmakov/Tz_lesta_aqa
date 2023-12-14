@@ -231,3 +231,19 @@ class ReadAttributeListAction(Action):
 
     def __call__(self) -> List[str]:
         return self._continuable_read_list_action("get_attribute", self._attr_name)
+
+
+class ClickByIndexElementsAction(Action):
+    """This class works in a pair with Elements class. Clicks by web page element by index.
+    self._owner.web_element is the List[WebElement] - result of class Elements
+    returns None
+    """
+    __slots__ = "_index"
+
+    def __init__(self, owner: TypeElement, index: int) -> None:
+        super().__init__(owner)
+        self._index = index
+
+    def __call__(self) -> None:
+        elements = self._owner.web_element if isinstance(self._owner.web_element, list) else [self._owner.web_element]
+        elements[self._index].click()
