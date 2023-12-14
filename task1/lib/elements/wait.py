@@ -2,7 +2,7 @@ import datetime
 import logging
 import time
 
-from typing import Callable, Optional, Tuple, Union, List, TypeVar
+from typing import Callable, Optional, Tuple, Union, List
 
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import ElementNotInteractableException
