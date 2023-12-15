@@ -258,3 +258,24 @@ class Input(Element):
 
     def press_enter(self) -> None:
         self._submit()
+
+
+class Checkbox(Element):
+    """Class for checkboxes or radio buttons. It's really work in pair with <label> element, for example:
+        <div>
+            <input id="something_id" type="checkbox"> - we check status only
+            <label for="something_id">Checkbox text</label> - we can click, and read text only
+        </div>
+    """
+
+    def __init__(self, locator: Tuple[str, str], timeout: int = Const.ELEMENT_WAIT_TIMEOUT) -> None:
+        super().__init__(locator, timeout=timeout)
+        self._condition: Callable[[Tuple[str, str]],
+                                  TypeElement] = expected_conditions.element_to_be_clickable(self._locator)
+
+    @property
+    def text(self) -> str:
+        return self._get_text()
+
+    def click(self) -> None:
+        self._click()
