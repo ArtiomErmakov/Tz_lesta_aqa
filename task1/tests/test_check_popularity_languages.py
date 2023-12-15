@@ -15,3 +15,24 @@ class TestCheckPopularityLanguages:
             failures.append(f"{website.website} (Frontend:{website.front_end}|Backend{website.back_end}) "
                             f"has {website.popularity} unique visitor per month. Expected more {count}  ")
 
+    @pytest.mark.parametrize(
+        "parameter_count",
+        [
+            pytest.param(10**7),
+            pytest.param(1.5 * 10**7),
+            pytest.param(5 * 10**7),
+            pytest.param(10**8),
+            pytest.param(5 * 10**8),
+            pytest.param(10**9),
+            pytest.param(1.5 * 10**9)
+        ]
+    )
+    def test_check_popularity_languages(self, driver: WebDriver,
+                                        parameter_count: float):
+        websites: List[ProgrammingLanguages] = ProgrammingLanguagesUI(
+            )._get_programming_languages_used_in_most_popular_websites(driver)
+        failures: List[str] = []
+        for website in websites:
+            self._check_popularity_on_website(website, failures, parameter_count)
+        if failures:
+            utils.raise_assert(failures)
