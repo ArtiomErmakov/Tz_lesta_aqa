@@ -57,7 +57,7 @@ class ProgrammingLanguagePage(Page):
 
     def get_popularity_by_row_table_cell(self, row: int) -> float:
         ProgrammingLanguagePage._popularity_by_row_table_cell = TableCell(self._locs.POPULARITY_BY_ROW_TABLE_CELL(row))
-        popularity = self._popularity_by_row_table_cell.text
+        popularity = self._popularity_by_row_table_cell.text.split('[')[0]
         numbers = re.findall(r'\b\d+\b', popularity)
         return float(''.join(numbers))
 
