@@ -431,3 +431,16 @@ class Elements(Element):
 
     def is_selected_by_index(self, index: int) -> bool:
         return self._is_selected_by_index_elements(index)
+
+
+class TableCell(Element):
+
+    @property
+    def text(self) -> str:
+        return self._get_text()
+
+    def get_attribute(self, attr_name: str) -> Optional[str]:
+        return self._get_attribute(attr_name)
+
+    def click(self) -> None:
+        self._click()
