@@ -475,3 +475,17 @@ class MenuItem(Element):
     @property
     def text(self) -> str:
         return self._get_text()
+
+
+class Slider(Element):
+
+    def set_percent(self, percent: int) -> None:
+        height = self._get_size()['height']
+        width = self._get_size()['width']
+
+        if width > height:
+            # highly likely a horizontal slider
+            self._drag_and_drop_by_offset(int(width / 100 * (percent - 50)), 0)
+        else:
+            # highly likely a vertical slider
+            self._drag_and_drop_by_offset(0, int(height / 100 * (percent - 50)))
