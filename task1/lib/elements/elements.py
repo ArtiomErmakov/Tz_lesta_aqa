@@ -22,3 +22,9 @@ from .wait import IGNORED_EXCEPTIONS
 from .wait import WebDriverWaitTill
 from ..constants import Const, Times
 from ..locators.locator import Locator
+
+TypeAction = TypeVar('TypeAction', bound=Action)  # any subclass of Action
+TypePage = TypeVar('TypePage', bound='Page')  # any subclass of Page
+
+FIND_ELEMENT_INTERNAL_TIMEOUT = Times.TWO_SECONDS
+
