@@ -42,3 +42,18 @@ class Settings:
     COLUMN_BG: str = 'bg'
 
     FALSE_VALUE: bool = False
+
+
+class Title:
+    ENGINE2D: str = 'Engine2D'
+
+    RECTANGLE: str = 'Rectangle'
+    CIRCLE: str = 'Circle'
+    TRIANGLE: str = 'Triangle'
+
+    OPTIONS: str = 'Options'
+    CHOOSE_COLOR: str = 'Choose color'
+    ACTIONS: str = 'Actions'
+    FILL: str = 'Fill'
+    SAVE: str = 'Save'
+    CLEAR: str = 'Clear'
