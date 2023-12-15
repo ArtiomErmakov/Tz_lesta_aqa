@@ -444,3 +444,19 @@ class TableCell(Element):
 
     def click(self) -> None:
         self._click()
+
+
+class ElementPresentTillDate(Element):
+    """Class for element that should be on page. If the element disappears -
+    returns False."""
+
+    def __get__(self, instance: TypePage, owner: Optional[TypePage] = None) -> bool:
+        web_driver = instance.driver  # type: WebDriver
+
+        wait = WebDriverWaitTill(driver=web_driver,
+                                 timeout=self._timeout,
+                                 poll_frequency=Const.POLL_FREQUENCY,
+                                 ignored_exceptions=IGNORED_EXCEPTIONS,
+                                 date=self._date)
+
+        return wait.till_date(self._condition)
