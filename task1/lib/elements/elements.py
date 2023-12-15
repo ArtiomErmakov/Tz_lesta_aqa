@@ -505,3 +505,29 @@ class ElementThatWillDisappear(Element):
                                  ignored_exceptions=IGNORED_EXCEPTIONS)
 
         return wait.until_not(self._condition)
+
+
+class IndexOneOfElementsLocated:
+    """ Custom Expected Condition
+
+     An expectation for checking that there is at least one element presents
+    on a web page.
+    locator is used to find the element - it is List[locator] = List[Tuple[str, str]]
+    returns - index of found element in the locators list
+    """
+    __slots__ = "locator"
+
+    def __init__(self, locator: List[Tuple[str, str]]) -> None:
+        self.locator = locator
+
+    def __call__(self, driver: WebDriver) -> Union[str, NoReturn]:
+        for num, locator in enumerate(self.locator):
+            result = None
+            try:
+                result = driver.find_element(*locator)
+                time.sleep(Const.POLL_FREQUENCY)
+            except (NoSuchElementException, WebDriverException):
+                pass
+            if result:
+                return str(num)
+        raise NoSuchElementException(f"No such element: {self.locator}")
