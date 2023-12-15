@@ -22,7 +22,7 @@ class Engine2D:
 
     def __init__(self) -> None:
         self._post_init()
-        self.root.mainloop()
+        # self.root.mainloop()
 
     def _post_init(self) -> None:
         self._init_root()
