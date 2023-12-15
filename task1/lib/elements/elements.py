@@ -489,3 +489,19 @@ class Slider(Element):
         else:
             # highly likely a vertical slider
             self._drag_and_drop_by_offset(0, int(height / 100 * (percent - 50)))
+
+
+class ElementThatWillDisappear(Element):
+    """Class for element that presents on page, and later that element should
+     disappear during the timeout.
+     """
+
+    def __get__(self, instance: TypePage, owner: Optional[TypePage] = None) -> bool:
+        web_driver = instance.driver  # type: WebDriver
+
+        wait = WebDriverWaitTill(driver=web_driver,
+                                 timeout=self._timeout,
+                                 poll_frequency=Const.POLL_FREQUENCY,
+                                 ignored_exceptions=IGNORED_EXCEPTIONS)
+
+        return wait.until_not(self._condition)
