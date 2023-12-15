@@ -279,3 +279,38 @@ class Checkbox(Element):
 
     def click(self) -> None:
         self._click()
+
+
+class Field(Element):
+    """Text Field element class. Can to: get text, clear, click, send keys."""
+
+    @property
+    def text(self) -> str:
+        return self._get_text()
+
+    def clear(self) -> None:
+        self._clear()
+
+    def click(self) -> None:
+        self._click()
+
+    def wait_text(self, value: Optional[str] = None) -> bool:
+        return self._wait_text_bool_result(value)
+
+    def send_keys(self, value: Optional[str]) -> None:
+        self._send_keys(value)
+
+    def wait_until_text_changed(self) -> bool:
+        return self._wait_until_text_changed_bool_result()
+
+    def get_property(self, name: str) -> str:
+        return self._get_property(name)
+
+    def right_click(self) -> None:
+        self._right_click()
+
+    def is_enabled(self) -> bool:
+        return self._is_enabled()
+
+    def press_enter(self) -> None:
+        self._submit()
