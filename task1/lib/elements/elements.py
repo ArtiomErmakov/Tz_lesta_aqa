@@ -531,3 +531,35 @@ class IndexOneOfElementsLocated:
             if result:
                 return str(num)
         raise NoSuchElementException(f"No such element: {self.locator}")
+
+
+class PolymorphicElement(Element):
+    """ Class for element that can be various types in the same place in UI.
+    For example parameters in the profile edit window can be 6 different types:
+    items-edit, context-edit, col-enum, col-bool, object-edit, mask-edit.
+
+    locator = [ (ByXpath, "//...spam"),
+                (ByXpath, "//...egg")
+              ]
+    method __get__ returns the index of element in the locator array, if that
+    element present on page
+    """
+
+    def __init__(self, locator: List[Tuple[str, str]], timeout: int = Const.ELEMENT_WAIT_TIMEOUT) -> None:
+        super().__init__(locator, timeout=timeout)
+        self._condition: Callable[..., str] = IndexOneOfElementsLocated(self._locator)
+
+    def __get__(self, instance: TypePage, owner: Optional[TypePage] = None) -> Union[int, NoReturn]:
+        web_driver = instance.driver  # type: WebDriver
+
+        wait = WebDriverWaitTill(driver=web_driver,
+                                 timeout=self._timeout,
+                                 poll_frequency=Const.POLL_FREQUENCY,
+                                 ignored_exceptions=IGNORED_EXCEPTIONS)
+
+        try:
+            return wait.until(self._condition)
+        except TimeoutException:
+            err_message = (f"No such polyelement: {self.__class__.__name__}, locator={self._locator},"
+                           f" condition={self._condition}, timeout={self._timeout}")
+            raise TimeoutException(err_message)
