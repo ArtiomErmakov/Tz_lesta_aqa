@@ -20,7 +20,7 @@ class Page:
         logging.info("Finished calling driver.get()...")
         self._post_init()
 
-    def _post_init(self):
+    def _post_init(self) -> None:
         self.sanity_check()
         logging.info("Sleeping 3 sec...")
         time.sleep(Times.THREE_SECONDS)    # delay that eliminates errors after page loading
