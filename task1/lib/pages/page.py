@@ -57,6 +57,6 @@ class Page:
     def title(self) -> str:
         return self._driver.title
 
-    def refresh(self):
+    def refresh(self) -> None:
         self._driver.refresh()
         time.sleep(Times.THREE_SECONDS)
