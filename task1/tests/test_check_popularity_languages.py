@@ -7,3 +7,11 @@ from typing import List
 
 
 class TestCheckPopularityLanguages:
+    @staticmethod
+    def _check_popularity_on_website(website: ProgrammingLanguages,
+                                     failures: List[str],
+                                     count: float) -> None:
+        if website.popularity < count:
+            failures.append(f"{website.website} (Frontend:{website.front_end}|Backend{website.back_end}) "
+                            f"has {website.popularity} unique visitor per month. Expected more {count}  ")
+
