@@ -16,3 +16,22 @@ class ProgrammingLanguages:
     database: Optional[List[str]] = None
     note: Optional[str] = None
 
+
+class ProgrammingLanguagesUI(ABC):
+
+    @staticmethod
+    def _get_programming_languages_used_in_most_popular_websites(driver: WebDriver) -> List[ProgrammingLanguages]:
+        logging.info(f"Run _get_programming_languages_used_in_most_popular_websites()")
+        programming_languages_page = ProgrammingLanguagePage(driver=driver)
+
+        num_website = programming_languages_page.get_count_all_websites()
+        websites_list = []
+        for row in range(1, num_website + 1):
+            website = programming_languages_page.get_website_name_by_row_table_cell(row)
+            popularity = programming_languages_page.get_popularity_by_row_table_cell(row)
+            front_end = programming_languages_page.get_front_end_by_row_table_cell(row)
+            back_end = programming_languages_page.get_back_end_by_row_table_cell(row)
+            database = programming_languages_page.get_database_by_row_table_cell(row)
+            note = programming_languages_page.get_note_by_row_table_cell(row)
+            websites_list.append(ProgrammingLanguages(website, popularity, front_end, back_end, database, note))
+        return websites_list
