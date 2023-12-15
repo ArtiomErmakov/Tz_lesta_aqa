@@ -57,3 +57,8 @@ class Title:
     FILL: str = 'Fill'
     SAVE: str = 'Save'
     CLEAR: str = 'Clear'
+
+
+class Color:
+    WHITE: str = 'white'
+    BLACK: str = 'black'
