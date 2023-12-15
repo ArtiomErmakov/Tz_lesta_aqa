@@ -355,3 +355,79 @@ class Link(Element):
     @property
     def text(self) -> str:
         return self._get_text()
+
+
+class Elements(Element):
+    """Class works with a group of elements selected by one locator"""
+
+    __slots__ = ("incomplete_result", "start_index")
+    _default_condition = expected_conditions.presence_of_all_elements_located
+
+    def __init__(self, locator: Union[Tuple[str, str], List[Tuple[str, str]]],
+                 timeout: int = Const.ELEMENT_WAIT_TIMEOUT,
+                 date: Optional[datetime.datetime] = None
+                 ) -> None:
+        super().__init__(locator, timeout, date)
+        self.incomplete_result: List[str] = []
+        self.start_index: int = 0
+
+    def _safe_list_interact(self,
+                            action: TypeAction,
+                            message: str = '') -> Union[Any, NoReturn]:
+        """Try rerun action() again and again, while it will be done,
+        because DOM could change suddenly, and the result may be reached far from
+        the first attempt."""
+
+        # reinit vars for processing result before starting interaction
+        self.start_index = 0
+        self.incomplete_result = []
+
+        end_time = time.time() + self._timeout
+        while True:
+            try:
+                self._find_element()
+                return action()
+            except (*IGNORED_EXCEPTIONS, TimeoutException, IncompleteListActionError):
+                pass
+
+            time.sleep(Const.POLL_FREQUENCY)
+            if time.time() > end_time:
+                break
+        message_text = ""
+        if message:
+            message_text = (f"Timeout expired, '{self.__class__.__name__}', locator={self._locator}, {self.web_element}"
+                            f", {message} {action.debug_value}.")
+            logging.info(message_text)
+        raise TimeoutException(message_text)
+
+    def _get_text_list(self) -> Union[List[str], NoReturn]:
+        message = "can't read text list"
+        return self._safe_list_interact(ReadTextListAction(self), message=message)
+
+    def _get_property_list(self, prop_name: str) -> Union[List[str], NoReturn]:
+        message = f"can't read prop '{prop_name}' list"
+        return self._safe_list_interact(ReadPropertyListAction(self, prop_name), message=message)
+
+    def _get_attribute_list(self, attr_name: str) -> Union[List[str], NoReturn]:
+        message = f"can't read attr '{attr_name}' list"
+        return self._safe_list_interact(ReadAttributeListAction(self, attr_name), message=message)
+
+    @property
+    def length(self) -> int:
+        return self._get_len()
+
+    @property
+    def text_list(self) -> List[str]:
+        return self._get_text_list()
+
+    def get_property_list(self, prop_name: str) -> List[str]:
+        return self._get_property_list(prop_name)
+
+    def get_attribute_list(self, attr_name: str) -> List[str]:
+        return self._get_attribute_list(attr_name)
+
+    def click_by_index(self, index: int) -> None:
+        self._click_by_index_elements(index)
+
+    def is_selected_by_index(self, index: int) -> bool:
+        return self._is_selected_by_index_elements(index)
