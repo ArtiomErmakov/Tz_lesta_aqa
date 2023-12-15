@@ -321,3 +321,18 @@ class ClickableField(Field):
         super().__init__(locator, timeout=timeout)
         self._condition: Callable[[Tuple[str, str]],
                                   TypeElement] = expected_conditions.element_to_be_clickable(self._locator)
+
+
+class NoElementPresent(Element):
+    """Class for element that shouldn't be on page. If the element appears -
+    something is going wrong."""
+
+    def __get__(self, instance: TypePage, owner: Optional[TypePage] = None) -> bool:
+        web_driver = instance.driver  # type: WebDriver
+
+        wait = WebDriverWaitTill(driver=web_driver,
+                                 timeout=self._timeout,
+                                 poll_frequency=Const.POLL_FREQUENCY,
+                                 ignored_exceptions=IGNORED_EXCEPTIONS)
+
+        return wait.till(self._condition)
