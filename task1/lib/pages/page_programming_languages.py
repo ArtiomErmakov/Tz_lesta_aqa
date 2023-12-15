@@ -39,7 +39,7 @@ class ProgrammingLanguagePage(Page):
         logging.info("Finished waiting sanity element on programming languages page...")
 
     @classmethod
-    def _post_init(cls):
+    def _post_init(cls) -> None:
         pass
 
     def get_count_all_websites(self) -> int:
