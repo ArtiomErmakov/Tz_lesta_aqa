@@ -207,3 +207,24 @@ class Element:
 
     def get_attribute(self, attr_name) -> Optional[str]:
         return self._get_attribute(attr_name)
+
+
+class Button(Element):
+
+    def __init__(self, locator: Tuple[str, str], timeout: int = Const.ELEMENT_WAIT_TIMEOUT) -> None:
+        super().__init__(locator, timeout=timeout)
+        self._condition: Callable[[Tuple[str, str]],
+                                  TypeElement] = expected_conditions.element_to_be_clickable(self._locator)
+
+    @property
+    def text(self) -> str:
+        return self._get_text()
+
+    def click(self) -> None:
+        self._click()
+
+    def get_attribute(self, attr_name: str) -> Optional[str]:
+        return self._get_attribute(attr_name)
+
+    def get_property(self, name: str) -> str:
+        return self._get_property(name)
