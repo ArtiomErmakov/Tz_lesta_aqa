@@ -336,3 +336,22 @@ class NoElementPresent(Element):
                                  ignored_exceptions=IGNORED_EXCEPTIONS)
 
         return wait.till(self._condition)
+
+
+class Link(Element):
+    """Class for Hyperlinks"""
+
+    def __init__(self, locator: Tuple[str, str], timeout: int = Const.ELEMENT_WAIT_TIMEOUT) -> None:
+        super().__init__(locator, timeout=timeout)
+        self._condition: Callable[[Tuple[str, str]],
+                                  TypeElement] = expected_conditions.element_to_be_clickable(self._locator)
+
+    def click(self) -> None:
+        self._click()
+
+    def wait_text(self, value: Optional[str] = None) -> bool:
+        return self._wait_text_bool_result(value)
+
+    @property
+    def text(self) -> str:
+        return self._get_text()
