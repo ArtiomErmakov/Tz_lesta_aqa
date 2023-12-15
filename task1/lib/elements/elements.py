@@ -228,3 +228,33 @@ class Button(Element):
 
     def get_property(self, name: str) -> str:
         return self._get_property(name)
+
+
+class Input(Element):
+    """Class for checking status of checkbox (is_selected() method). Input is NOT CLICKABLE!!! , for example:
+        <div>
+            <input id="something_id" type="checkbox"> - use this element we can check status of the checkbox
+            <label for="something_id">Checkbox text</label> - we can click by this element
+        </div>
+    """
+
+    def is_selected(self) -> bool:
+        return self._is_selected()
+
+    def clear(self) -> None:
+        self._clear()
+
+    def send_keys(self, value: Optional[str]) -> None:
+        self._send_keys(value)
+
+    def get_property(self, name: str) -> str:
+        return self._get_property(name)
+
+    def set_focus(self) -> None:
+        self._send_keys("")
+
+    def click(self) -> None:
+        self._click()
+
+    def press_enter(self) -> None:
+        self._submit()
